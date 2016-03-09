@@ -264,5 +264,4 @@ int load_565rle_image(char *filename, bool bf_supported);
 int draw_rgb888_screen(void);
 #endif
 
-void mdp_restore_rgb(void);
 #endif /* MSM_FB_H */
