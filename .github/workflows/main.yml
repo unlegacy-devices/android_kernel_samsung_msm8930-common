@@ -21,6 +21,7 @@ jobs:
         export KBUILD_BUILD_HOST=unlegacy-devices
         make -j22 ARCH=arm VARIANT_DEFCONFIG=msm8930_loganre_eur_lte_defconfig cyanogen_loganre_defconfig
         make oldconfig
+        make -j129
     - name: Moving Output # CI only
       run: |
         mkdir -p /home/runner/work/output
