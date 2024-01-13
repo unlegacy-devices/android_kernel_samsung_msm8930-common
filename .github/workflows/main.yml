@@ -14,7 +14,7 @@ jobs:
     - name: Getting Toolchain
       run: |
         sudo apt-get install lib32z1 ccache autoconf
-        sudo git clone --depth 1 --branch android-5.1.1_r37 --single-branch https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.8 /opt/toolchains/arm-linux-androideabi-4.8/
+        sudo git clone --depth 1 --branch android-5.1.1_r37 --single-branch https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-eabi-4.8/ /opt/toolchains/arm-eabi-4.8/
     - name: Building Kernel
       run: |
         export KBUILD_BUILD_USER=notnoelchannel
