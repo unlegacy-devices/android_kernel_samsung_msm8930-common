@@ -19,6 +19,7 @@ jobs:
       run: |
         export KBUILD_BUILD_USER=notnoelchannel
         export KBUILD_BUILD_HOST=unlegacy-devices
+        make syncconfig
         make distclean
         make -j22 ARCH=arm VARIANT_DEFCONFIG=msm8930_loganre_eur_lte_defconfig cyanogen_loganre_defconfig
         make -j128
