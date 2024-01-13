@@ -1,0 +1,32 @@
+name: Kernel CI
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: Checkout Kernel Source
+      uses: actions/checkout@v2
+
+    - name: Getting Toolchain
+      run: |
+        sudo apt-get install lib32z1 ccache
+        sudo git clone --depth 1 --branch android-5.1.1_r37 --single-branch https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.8 /opt/toolchains/arm-linux-androideabi-4.8/
+    - name: Building Kernel
+      run: |
+        export KBUILD_BUILD_USER=notnoelchannel
+        export KBUILD_BUILD_HOST=unlegacy-devices
+        make -j22 ARCH=arm VARIANT_DEFCONFIG=msm8930_loganre_eur_lte_defconfig cyanogen_loganre_defconfig
+        make -j128
+    - name: Moving Output # CI only
+      run: |
+        mkdir -p /home/runner/work/output
+        cp arch/arm/boot/zImage /home/runner/work/output/zImage
+    - name: Uploading Output
+      uses: actions/upload-artifact@v2
+      with:
+        name: zImage
+        path: /home/runner/work/output/zImage
