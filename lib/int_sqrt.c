@@ -1,4 +1,3 @@
-
 #include <linux/kernel.h>
 #include <linux/export.h>
 
@@ -10,23 +9,28 @@
  */
 unsigned long int_sqrt(unsigned long x)
 {
-	unsigned long op, res, one;
+	register unsigned long tmp;
+	register unsigned long place;
+	register unsigned long root = 0;
 
 	op = x;
 	res = 0;
 
-	one = 1UL << (BITS_PER_LONG - 2);
-	while (one > op)
-		one >>= 2;
+	place = 1UL << (BITS_PER_LONG - 2);
 
-	while (one != 0) {
-		if (op >= res + one) {
-			op = op - (res + one);
-			res = res +  2 * one;
+		do{
+		place >>= 2;
+	}while(place > op);
+
+	do {
+		tmp = root + place;
+		root >>= 1;
+
+		if (op >= tmp)
+		{
+			op -= tmp;
+			root += place;
 		}
-		res /= 2;
-		one /= 4;
-	}
-	return res;
+	return root;
 }
 EXPORT_SYMBOL(int_sqrt);
