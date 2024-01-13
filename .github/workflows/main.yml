@@ -13,12 +13,13 @@ jobs:
 
     - name: Getting Toolchain
       run: |
-        sudo apt-get install lib32z1 ccache
+        sudo apt-get install lib32z1 ccache autoconf
         sudo git clone --depth 1 --branch android-5.1.1_r37 --single-branch https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.8 /opt/toolchains/arm-linux-androideabi-4.8/
     - name: Building Kernel
       run: |
         export KBUILD_BUILD_USER=notnoelchannel
         export KBUILD_BUILD_HOST=unlegacy-devices
+        make distclean
         make -j22 ARCH=arm VARIANT_DEFCONFIG=msm8930_loganre_eur_lte_defconfig cyanogen_loganre_defconfig
         make -j128
     - name: Moving Output # CI only
